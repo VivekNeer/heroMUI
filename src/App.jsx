@@ -18,13 +18,16 @@ import {
 } from "@mui/material";
 import house from "../src/assets/house.jpg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import MenuIcon from "@mui/icons-material/Menu";
+import SendIcon from "@mui/icons-material/Send";
+
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
 import Popper from "@mui/material/Popper";
 import MenuList from "@mui/material/MenuList";
+import Fade from "@mui/material/Fade";
+import Slide from "@mui/material/Slide";
 
 const options = ["Home", "About", "Gallery", "Pricing", "About"];
 
@@ -41,6 +44,11 @@ function App() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [isVisible, setIsVisible] = useState(false);
+
+  React.useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
@@ -99,9 +107,6 @@ function App() {
                 </ButtonGroup>
               </Hidden>
               <Hidden smUp>
-                {/* <IconButton sx={{ color: "white" }} aria-label="menu">
-                  <MenuIcon />
-                </IconButton> */}
                 <ButtonGroup
                   variant="text"
                   ref={anchorRef}
@@ -171,19 +176,27 @@ function App() {
             </Toolbar>
           </AppBar>
           <Grid>
-            <Typography variant="h2" sx={{ fontWeight: "500", color: "white" }}>
-              Get Ready.
-            </Typography>
-            <Typography
-              variant="h2"
-              gutterBottom
-              sx={{ fontWeight: "460", color: "white" }}
-            >
-              We're finishing!
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-              Enter your Email for the latest news.
-            </Typography>
+            <Fade in={isVisible} timeout={1000}>
+              <Typography variant="h2" sx={{ fontWeight: "500", color: "white" }}>
+                Get Ready.
+              </Typography>
+            </Fade>
+            <Fade in={isVisible} timeout={1500}>
+              <Typography
+                variant="h2"
+                gutterBottom
+                sx={{ fontWeight: "460", color: "white" }}
+              >
+                We're finishing!
+              </Typography>
+            </Fade>
+            <Fade in={isVisible} timeout={2000}>
+              <Slide direction="right" in={isVisible} timeout={2000}>
+                <Typography variant="h5" gutterBottom>
+                  Enter your Email for the latest news.
+                </Typography>
+              </Slide>
+            </Fade>
             <Paper
               component="form"
               sx={{
@@ -200,7 +213,7 @@ function App() {
                 inputProps={{ "aria-label": "search google maps" }}
               />
               <IconButton sx={{ p: "10px" }} aria-label="menu">
-                <MenuIcon />
+                <SendIcon />
               </IconButton>
             </Paper>
           </Grid>
